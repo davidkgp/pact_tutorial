@@ -1,23 +1,29 @@
 package org.example.service.implementation;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.controller.dto.Address;
 import org.example.controller.dto.Student;
+import org.example.repository.interfaces.IStudentRepository;
+import org.example.repository.interfaces.dto.StudentData;
 import org.example.service.interfaces.IStudentDataService;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class StudentDataServiceImpl implements IStudentDataService {
+
+    private final IStudentRepository studentRepository;
 
 
     public Student getStudentDummy(String rollId) {
-        log.info("Passed Rollid "+rollId);
+        log.info("Passed Rollid " + rollId);
         return new Student("ADR456", "Tom Hardy", 67, new Address("Amstelveen", "netherlands"));
     }
 
     @Override
     public Student getStudent(String rollId) {
-        return null;
+        return studentRepository.findById(rollId).map(StudentData::map).orElseThrow(() -> new IllegalArgumentException("Student Not Found"));
     }
 }

@@ -27,11 +27,20 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <lombok.version>1.18.8</lombok.version>
         <junit4.version>4.12</junit4.version>
-        <maven.deploy.skip>true</maven.deploy.skip>
+        <postgres.driver.version>42.2.9</postgres.driver.version>
+
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgres.driver.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.projectlombok</groupId>
