@@ -2,7 +2,7 @@ package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.controller.dto.Student;
-import org.example.service.StudentDataService;
+import org.example.service.interfaces.IStudentDataService;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -17,13 +17,24 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequiredArgsConstructor//(onConstructor = @__(@Autowired))
 public class StudentDataController {
 
-    private final StudentDataService studentDataService;
+    private final IStudentDataService studentDataService;
 
     @GetMapping(value = "/keepalive")
     public HttpEntity<String> keepAlive() {
         return new ResponseEntity<>("Alive", HttpStatus.OK);
     }
 
+
+    @GetMapping(path = "/studentdummy/{id}")
+    public HttpEntity<Student> getStudentDummy(@PathVariable("id") String rollId) {
+
+        Student student = studentDataService.getStudentDummy(rollId);
+        student.add(linkTo(methodOn(StudentDataController.class).getStudentDummy(rollId)).withSelfRel());
+        student.add(linkTo(methodOn(StudentDataController.class).deleteStudent(rollId)).withRel(LinkRelation.of(HttpMethod.DELETE.name())));
+        return new ResponseEntity<>(student, HttpStatus.OK);
+
+
+    }
 
     @GetMapping(path = "/student/{id}")
     public HttpEntity<Student> getStudent(@PathVariable("id") String rollId) {
