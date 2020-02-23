@@ -19,8 +19,8 @@ public class Student extends RepresentationModel<Student> {
     private Address address;
 
     public static StudentData map(Student studentInput) {
-        String firstName = studentInput.getFullName().substring(studentInput.getFullName().indexOf(" "));
-        String lastName = studentInput.getFullName().substring(studentInput.getFullName().indexOf(" "), studentInput.getFullName().length());
+        String firstName = studentInput.getFullName().substring(0,studentInput.getFullName().indexOf(" "));
+        String lastName = studentInput.getFullName().substring(studentInput.getFullName().indexOf(" ")+1, studentInput.getFullName().length());
 
         return new StudentData(firstName, lastName, studentInput.getAge(), Address.map(studentInput.getAddress()));
 
