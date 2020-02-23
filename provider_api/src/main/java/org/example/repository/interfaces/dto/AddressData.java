@@ -1,9 +1,20 @@
 package org.example.repository.interfaces.dto;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.example.controller.dto.Address;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity(name = "addresses")
 @Getter
@@ -19,9 +30,14 @@ public final class AddressData {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="address_seq")
+    @SequenceGenerator(
+            name="address_seq",
+            sequenceName="address_hibernate_sequence",
+            allocationSize=1
+    )
     @Column(name = "address_id", updatable = false, nullable = false)
-    private String addressId;
+    private long addressId;
 
     @Column(name = "addressline1", nullable = false)
     private String addressLine1;
@@ -32,6 +48,6 @@ public final class AddressData {
     private StudentData student;
 
     public static Address map(AddressData addressData) {
-        return new Address(addressData.addressLine1,addressData.addressLine2);
+        return new Address(addressData.addressLine1, addressData.addressLine2);
     }
 }

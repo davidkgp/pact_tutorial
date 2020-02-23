@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -48,11 +50,11 @@ public class StudentDataController {
     }
 
     @PostMapping(path = "/student")
-    public HttpEntity<Student> createStudent(Student studentInput) {
+    public HttpEntity<Student> createStudent(@RequestBody Student studentInput) {
 
         Student student = studentDataService.createStudent(studentInput);
-        student.add(linkTo(methodOn(StudentDataController.class).getStudent(student.getRollId())).withSelfRel());
-        student.add(linkTo(methodOn(StudentDataController.class).deleteStudent(student.getRollId())).withRel(LinkRelation.of(HttpMethod.DELETE.name())));
+        student.add(linkTo(methodOn(StudentDataController.class).getStudent(student.getRollId().toString())).withSelfRel());
+        student.add(linkTo(methodOn(StudentDataController.class).deleteStudent(student.getRollId().toString())).withRel(LinkRelation.of(HttpMethod.DELETE.name())));
 
         return new ResponseEntity<>(student, HttpStatus.OK);
 
