@@ -26,4 +26,10 @@ public class StudentDataServiceImpl implements IStudentDataService {
     public Student getStudent(String rollId) {
         return studentRepository.findById(rollId).map(StudentData::map).orElseThrow(() -> new IllegalArgumentException("Student Not Found"));
     }
+
+    @Override
+    public Student createStudent(Student studentInput) {
+        log.info(studentInput.toString());
+        return StudentData.map(studentRepository.save(Student.map(studentInput)));
+    }
 }

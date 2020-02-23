@@ -7,4 +7,6 @@ public interface IStudentDataService {
     Student getStudentDummy(String rollId);
 
     Student getStudent(String rollId);
+
+    Student createStudent(Student studentInput);
 }

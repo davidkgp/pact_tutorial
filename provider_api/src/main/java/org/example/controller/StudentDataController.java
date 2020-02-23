@@ -48,8 +48,9 @@ public class StudentDataController {
     }
 
     @PostMapping(path = "/student")
-    public HttpEntity<Student> createStudent(Student student) {
+    public HttpEntity<Student> createStudent(Student studentInput) {
 
+        Student student = studentDataService.createStudent(studentInput);
         student.add(linkTo(methodOn(StudentDataController.class).getStudent(student.getRollId())).withSelfRel());
         student.add(linkTo(methodOn(StudentDataController.class).deleteStudent(student.getRollId())).withRel(LinkRelation.of(HttpMethod.DELETE.name())));
 
