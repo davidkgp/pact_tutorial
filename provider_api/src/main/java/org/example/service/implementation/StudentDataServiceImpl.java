@@ -32,4 +32,14 @@ public class StudentDataServiceImpl implements IStudentDataService {
         log.info(studentInput.toString());
         return StudentData.map(studentRepository.save(Student.map(studentInput)));
     }
+
+    @Override
+    public void deleteStudent(String rollId) {
+        studentRepository.deleteById(rollId);
+    }
+
+    @Override
+    public boolean studentExists(String rollId) {
+        return studentRepository.existsById(rollId);
+    }
 }

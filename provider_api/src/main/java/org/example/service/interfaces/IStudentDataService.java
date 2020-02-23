@@ -9,4 +9,8 @@ public interface IStudentDataService {
     Student getStudent(String rollId);
 
     Student createStudent(Student studentInput);
+
+    void deleteStudent(String rollId);
+
+    boolean studentExists(String rollId);
 }

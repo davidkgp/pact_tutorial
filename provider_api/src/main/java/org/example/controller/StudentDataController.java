@@ -8,7 +8,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -62,7 +67,12 @@ public class StudentDataController {
     @DeleteMapping(path = "/student/{id}")
     public HttpEntity<?> deleteStudent(@PathVariable("id") String rollId) {
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (studentDataService.studentExists(rollId)) {
+            studentDataService.deleteStudent(rollId);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
 
     }
