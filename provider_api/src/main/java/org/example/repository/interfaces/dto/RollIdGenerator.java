@@ -27,9 +27,10 @@ public class RollIdGenerator extends SequenceStyleGenerator {
     @Override
     public Serializable generate(SharedSessionContractImplementor session,
                                  Object object) throws HibernateException {
-        log.debug("ValuePrefix :"+valuePrefix);
-        log.debug("NumberFormat :"+numberFormat);
-
+        log.debug("ValuePrefix :" + valuePrefix);
+        log.debug("NumberFormat :" + numberFormat);
+        //super.generate(session,object) is going to use the database sequence setup using the same name
+        // in @GenericGenerator(name="student_roll" in database
         return valuePrefix + String.format(numberFormat, super.generate(session, object));
     }
 
