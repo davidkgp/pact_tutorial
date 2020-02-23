@@ -9,8 +9,6 @@ import org.example.repository.interfaces.dto.StudentData;
 import org.example.service.interfaces.IStudentDataService;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -21,7 +19,7 @@ public class StudentDataServiceImpl implements IStudentDataService {
 
     public Student getStudentDummy(String rollId) {
         log.info("Passed Rollid " + rollId);
-        return new Student(UUID.randomUUID(), "Tom Hardy", 67, new Address("Amstelveen", "netherlands"));
+        return new Student(rollId, "Tom Hardy", 67, new Address("Amstelveen", "netherlands"));
     }
 
     @Override

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.example.controller.dto.Student;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,13 +16,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import java.util.UUID;
 
 @Entity(name = "students")
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString
+@GenericGenerator(name="student_roll"
+        ,strategy = "org.example.repository.interfaces.dto.RollIdGenerator"
+        ,parameters = {
+        @Parameter(name = RollIdGenerator.VALUE_PREFIX_PARAMETER, value = "AG"),
+        @Parameter(name = RollIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d") })
 public final class StudentData {
 
 
@@ -32,9 +38,9 @@ public final class StudentData {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.SEQUENCE,generator = "student_roll")
     @Column(name = "id", updatable = false, nullable = false)
-    private UUID rollId;
+    private String rollId;
 
     @Column(name = "firstname", nullable = false)
     private String firstName;

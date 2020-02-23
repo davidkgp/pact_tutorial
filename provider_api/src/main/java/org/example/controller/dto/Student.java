@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Student extends RepresentationModel<Student> {
 
-    private UUID rollId;
+    private String rollId;
     private String fullName;
     private int age;
     private Address address;
